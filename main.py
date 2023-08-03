@@ -1,51 +1,60 @@
 import turtle as t
+from turtle import Screen 
 import random
-from turtle import Screen
 
 tim = t.Turtle()
 
-########### Challenge 3 - Draw Shapes ########
+########### Challenge 4 - Random Walk ########
+colors = ["CornflowerBlue", "DarkOrchid", "IndianRed", "DeepSkyBlue", "LightSeaGreen", "wheat", "SlateGray", "SeaGreen"]
 
-def draw_shape(num_sides):
-  angle = 360/num_sides
-  for _ in range(num_sides):
-    tim.forward(50)
-    tim.right(angle)
-
-colors = ["cornflower blue",
-         "deep sky blue",
-         "pale green",
-         "medium aquamarine",
-         "wheat",
-         "peach puff",
-         "light sky blue"]
-
-for shape_side_n in range(3,11):
-  tim.color(random.choice(colors))
-  draw_shape(shape_side_n)
-
-
-'''
-# color = random.choices(range(256), k=3)
-# tim.pencolor(color[0], color[1], color[2])
-
-# r = random.randint(0, 255)
-# g = random.randint(0, 255)
-# b = random.randint(0, 255)
-# random_color = (r, g, b)
-# tim.pencolor(random_color)
+#thicker lines
+#speed up turtle
 
 screen = Screen()
-screen.colormode(255)
+# screen.onclick(tim.goto)
 
-for sides in range(3,11):
-  r = random.randint(0, 255)
-  g = random.randint(0, 255)
-  b = random.randint(0, 255)
-  tim.pencolor(r, g, b)
-  
-  for _ in range(sides):
-    tim.forward(40)
-    tim.right(360/sides)
+def isInScreen(wn,t):
+  '''returns true if turtle still in screen, false if out of screen'''
+  leftBound = -(wn.window_width() / 2)
+  rightBound = wn.window_width() / 2
+  topBound = wn.window_height() / 2
+  bottomBound = -(wn.window_height() / 2)
 
-'''
+  turtleX = t.xcor()
+  turtleY = t.ycor()
+
+  stillIn = True
+  if turtleX > rightBound or turtleX < leftBound:
+      stillIn = False
+  if turtleY > topBound or turtleY < bottomBound:
+      stillIn = False
+
+  return stillIn
+
+
+
+tim.hideturtle()
+tim.pensize(10)
+tim.speed(0)
+
+# def stop():
+#   screen.exitonclick()
+
+
+
+#want it to continue until i click screen
+for _ in range(0,500):
+  # program stops when runs off screen
+  # instead change directions so stays on screen
+  while isInScreen(screen, tim):
+    tim.color(random.choice(colors))
+    tim.forward(random.randint(1, 50))
+    tim.right(random.randint(1, 5)*90)
+
+
+
+# def f():
+#     tim.fd(50)
+
+# screen.onkey(f, "Up")
+# screen.listen()
